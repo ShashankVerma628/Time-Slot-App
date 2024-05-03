@@ -1,0 +1,13 @@
+:root {
+  --headerHeight: 60px;
+  --secondaryColor: #cce7e0;
+  --primaryColor: #378760;
+  --primaryFontColor: #090f4e;
+  --white: #fff;
+}
+
+@media screen and (min-width: 1200px) {
+  :root {
+    --headerHeight: 90px;
+  }
+}

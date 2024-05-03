@@ -1,0 +1,30 @@
+.copy_btn {
+  border: 1px solid var(--primaryColor);
+  padding: 3px 5px;
+  border-radius: 15px;
+  color: var(--primaryColor);
+  font-size: 16px;
+  text-decoration: none;
+  max-width: max-content;
+  transition: all 0.2s ease-in;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  gap: 6px;
+  padding: 5px 10px;
+}
+
+.copy_btn:hover,
+.copy_btn:focus {
+  background-color: var(--secondaryColor);
+}
+
+@media screen and (min-width: 1200px) {
+  .copy_btn {
+    height: 40px;
+    width: 150px;
+    padding: 8px 20px;
+    gap: 8px;
+  }
+}

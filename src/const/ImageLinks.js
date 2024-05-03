@@ -1,0 +1,6 @@
+const ImageLinks = {
+  LogoImage:
+    "https://s3-alpha-sig.figma.com/img/0005/a82a/0025f492d3cfc64e1b15ef9fa269e10b?Expires=1715558400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=lpPQ3uQEL1EZ4~8TAzwO4nWWreLBzWp7qbQd11VaoHhbzxvD~3k-pJgVvUIG7DlJJp2CY1aogjeYvesqZvNTbUFVlsL8PAz-ECw7PkuaLoVq9zgnE7XaRjdLhBOt7JBZvF3z2v38C7FvDp9VQ9u61rehRWJR9Usx0bCCWQhdkdFyjcAyvSVr5Jlgi-GbEc5hI8G1QoWXTkWAfZb6~uNUy4Teyd16nH4tbUvqVghPkyorasYHLVML7aNsGBAhuIjpaRwMhEs08zcCh-Fk~BdXAW9dMcMyH1GlenVLd1JK86-7wi8cye8xU5MXSNfkMnEvTfhCUBrTbKs9~J5LrylcRQ__",
+};
+
+export default ImageLinks;
