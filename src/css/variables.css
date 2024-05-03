@@ -4,6 +4,7 @@
   --primaryColor: #378760;
   --primaryFontColor: #090f4e;
   --white: #fff;
+  --secondaryFontColor: #333333;
 }
 
 @media screen and (min-width: 1200px) {
