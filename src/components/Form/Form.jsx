@@ -27,7 +27,7 @@ const Form = () => {
             className={styles.bottom_left_link}
             href="https://google.com"
           >
-            Appointo
+            Appointer
           </a>
         </div>
         <div className={styles.bottom_right}>
