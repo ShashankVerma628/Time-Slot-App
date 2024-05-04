@@ -3,20 +3,32 @@ import "../../../css/calender.css";
 import styles from "./actions.module.css";
 
 const Actions = () => {
-  const { setDate, date, selectRange } = useAppContext();
+  const { date, selectRange, slotsAvailable, isLoading } = useAppContext();
 
   return (
     <>
-      {date.length > 0 && selectRange ? (
-        <p className="text-center">
-          {date[0].toDateString()}
-          &nbsp;-&nbsp;
-          {date[1].toDateString()}
-        </p>
+      {slotsAvailable?.length > 0 ? (
+        <>
+          {date.length > 0 && selectRange ? (
+            <p className="text-center">
+              {date[0].toDateString()}
+              &nbsp;-&nbsp;
+              {date[1].toDateString()}
+            </p>
+          ) : (
+            <p className={styles.right_top_heading}>
+              {date.toDateString()} - AVAILABLE SLOTS
+            </p>
+          )}
+        </>
       ) : (
-        <p className={styles.right_top_heading}>
-          {date.toDateString()} - AVAILABLE SLOTS
-        </p>
+        <>
+          {isLoading ? (
+            <p>Hold on....</p>
+          ) : (
+            <p>Please select a date to check available slot</p>
+          )}
+        </>
       )}
     </>
   );
