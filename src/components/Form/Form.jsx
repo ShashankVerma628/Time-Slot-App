@@ -7,7 +7,7 @@ import Actions from "../CustomCalendar/Partials/Actions";
 import IconDown from "../../assets/IconDown";
 import SingleSlot from "../SingleSlot/SingleSlot";
 import Loader from "../Loader/Loader";
-import { formatTime } from "../../utils";
+import { formatDate, formatTime } from "../../utils";
 const Form = () => {
   const {
     isActive,
@@ -118,11 +118,17 @@ const Form = () => {
       {currentStep === 2 && (
         <div className={styles.success_container}>
           <h2 className={styles.success_heading}>Congratulations</h2>
-          <p className={styles.para}>Your appointment has been booked for : </p>
-          <p className={styles.time_slot_para}>
-            {formatTime(slotsAvailable[currentSelected]?.start_time)} -{" "}
-            {formatTime(slotsAvailable[currentSelected]?.end_time)}
-          </p>
+          <p className={styles.para}>Your appointment has been booked at : </p>
+          <div>
+            <p className={styles.time_slot_para}>
+              Date :{formatDate(slotsAvailable[currentSelected]?.start_time)}
+            </p>
+            <p className={styles.time_slot_para}>
+              Time : {formatTime(slotsAvailable[currentSelected]?.start_time)} -{" "}
+              {formatTime(slotsAvailable[currentSelected]?.end_time)}
+            </p>
+          </div>
+
           <button onClick={cleanState} className={styles.back_btn}>
             Go Back
           </button>
