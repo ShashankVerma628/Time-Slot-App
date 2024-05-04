@@ -1,17 +1,27 @@
 .body_container {
   width: 100%;
-  height: calc(100vh - var(--headerHeight));
   margin-top: var(--headerHeight);
-  background: url("./assets/LeftBand.png") no-repeat bottom center/cover;
-  position: relative;
-  z-index: 2;
 }
 
 .right {
-  position: absolute;
-  right: 0;
-  bottom: 20%;
-  z-index: 2;
-  transform: translate(0, 20%);
-  z-index: 2;
+  display: none;
+}
+
+@media screen and (min-width: 1200px) {
+  .body_container {
+    background: url("./assets/LeftBand.png") no-repeat bottom center/cover;
+    position: relative;
+    height: calc(100vh - var(--headerHeight));
+    z-index: 2;
+  }
+
+  .right {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 20%;
+    z-index: 2;
+    transform: translate(0, 20%);
+    z-index: 2;
+  }
 }
