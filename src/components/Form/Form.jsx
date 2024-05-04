@@ -2,8 +2,29 @@ import React, { useState } from "react";
 import styles from "./form.module.css";
 import CustomCalendar from "../CustomCalendar/CustomCalendar";
 import IconRight from "../../assets/IconRight";
+import { useAppContext } from "../../context/appContext";
+import Actions from "../CustomCalendar/Partials/Actions";
 const Form = () => {
-  const [date, setDate] = useState(new Date());
+  const { date, setDate, isActive, setIsActive, selected, setIsSelected } =
+    useAppContext();
+
+  const availableSlots = [
+    {
+      id: 1,
+      text: "30 min",
+      value: 30,
+    },
+    {
+      id: 2,
+      text: "45 min",
+      value: 45,
+    },
+    {
+      id: 3,
+      text: "60 min",
+      value: 60,
+    },
+  ];
 
   return (
     <article className={styles.content_container}>
@@ -15,9 +36,47 @@ const Form = () => {
               <span className={styles.zone}>Timezone: </span>Asia/Kolkata
             </p>
           </div>
-          <CustomCalendar date={date} setDate={setDate} />
+          <CustomCalendar />
         </div>
-        <div className={styles.content_right_container}>sldjlkjdflkj</div>
+        <div className={styles.content_right_container}>
+          <div className={styles.top}>
+            <label className={styles.top_heading} for="slots">
+              Select From Variants
+            </label>
+            <div className={styles.dropdown}>
+              <div
+                onClick={(e) => {
+                  setIsActive(!isActive);
+                }}
+                className={styles.dropdown_btn}
+              >
+                {selected}
+                {/* <span
+                  className={isActive ? "fas fa-caret-up" : "fas fa-caret-down"}
+                /> */}
+              </div>
+              <div
+                className={styles.dropdown_content}
+                style={{ display: isActive ? "block" : "none" }}
+              >
+                {availableSlots?.map((slot) => (
+                  <div
+                    onClick={(e) => {
+                      setIsSelected(slot?.text);
+                      setIsActive(!isActive);
+                    }}
+                    className={styles.item}
+                  >
+                    {slot?.text}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className={styles.right_bottom}>
+            <Actions />
+          </div>
+        </div>
       </div>
       <div className={styles.bottom}>
         <div className={styles.bottom_left}>
