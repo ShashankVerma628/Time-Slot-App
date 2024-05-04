@@ -196,7 +196,6 @@
 }
 
 .dropdown {
-  margin: 0 auto;
   z-index: 9999;
   width: 300px;
   position: relative;
@@ -289,5 +288,18 @@
   .main_content {
     flex-direction: row;
     min-width: 600px;
+  }
+}
+
+@media screen and (min-width: 1400px) {
+  .content_container {
+    min-width: 65%;
+    min-height: 548px;
+  }
+  .content_left_container {
+    width: 50%;
+  }
+  .content_right_container {
+    width: 50%;
   }
 }

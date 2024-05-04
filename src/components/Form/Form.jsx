@@ -7,6 +7,7 @@ import Actions from "../CustomCalendar/Partials/Actions";
 import IconDown from "../../assets/IconDown";
 import SingleSlot from "../SingleSlot/SingleSlot";
 import Loader from "../Loader/Loader";
+import { formatTime } from "../../utils";
 const Form = () => {
   const {
     isActive,
@@ -18,6 +19,7 @@ const Form = () => {
     isLoading,
     setCurrentStep,
     cleanState,
+    currentSelected,
   } = useAppContext();
 
   const availableSlots = [
@@ -109,35 +111,44 @@ const Form = () => {
           </>
         )}
       </div>
-      {currentStep === 2 && <div>Congrats</div>}
-      <div className={styles.bottom}>
-        <div className={styles.bottom_left}>
-          Powered by{" "}
-          <a
-            target="_blank"
-            className={styles.bottom_left_link}
-            href="https://google.com"
-          >
-            Appointer
-          </a>
-        </div>
-        {currentStep === 1 && (
-          <div className={styles.bottom_right}>
-            <button
-              onClick={() => setCurrentStep(2)}
-              className={styles.next_btn}
-            >
-              <span>Next</span>
-              <IconRight />
-            </button>
-          </div>
-        )}
-        {currentStep === 2 && (
-          <span onClick={cleanState} className={styles.back_btn}>
+      {currentStep === 2 && (
+        <div className={styles.success_container}>
+          <h2 className={styles.success_heading}>Congratulations</h2>
+          <p>Your appointment has been booked for : </p>
+          <p>
+            {formatTime(slotsAvailable[currentSelected]?.start_time)} -{" "}
+            {formatTime(slotsAvailable[currentSelected]?.end_time)}
+          </p>
+          <button onClick={cleanState} className={styles.back_btn}>
             Go Back
-          </span>
-        )}
-      </div>
+          </button>
+        </div>
+      )}
+      {currentStep === 1 && (
+        <div className={styles.bottom}>
+          <div className={styles.bottom_left}>
+            Powered by{" "}
+            <a
+              target="_blank"
+              className={styles.bottom_left_link}
+              href="https://google.com"
+            >
+              Appointer
+            </a>
+          </div>
+          {currentStep === 1 && (
+            <div className={styles.bottom_right}>
+              <button
+                onClick={() => setCurrentStep(2)}
+                className={styles.next_btn}
+              >
+                <span>Next</span>
+                <IconRight />
+              </button>
+            </div>
+          )}
+        </div>
+      )}
     </article>
   );
 };
