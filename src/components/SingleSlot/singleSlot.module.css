@@ -1,0 +1,32 @@
+.slot_wrapper {
+  border: 1px solid var(--primaryColor);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: linear-gradient(to right, var(--primaryColor) 50%, white 50%);
+  background-size: 200% 100%;
+  background-position: right bottom;
+  transition: all 0.3s ease-out;
+  cursor: pointer;
+}
+
+.selected_slot {
+  background-color: var(--primaryColor);
+  background-position: left bottom;
+  justify-content: space-between;
+}
+
+.left {
+  color: #378760;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 21px;
+}
+
+.selected_text {
+  color: var(--white);
+}

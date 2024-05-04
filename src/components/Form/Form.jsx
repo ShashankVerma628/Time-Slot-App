@@ -4,9 +4,19 @@ import CustomCalendar from "../CustomCalendar/CustomCalendar";
 import IconRight from "../../assets/IconRight";
 import { useAppContext } from "../../context/appContext";
 import Actions from "../CustomCalendar/Partials/Actions";
+import IconDown from "../../assets/IconDown";
+import SingleSlot from "../SingleSlot/SingleSlot";
 const Form = () => {
-  const { date, setDate, isActive, setIsActive, selected, setIsSelected } =
-    useAppContext();
+  const {
+    date,
+    setDate,
+    isActive,
+    setIsActive,
+    selected,
+    setIsSelected,
+    handleSelect,
+    slotsAvailable,
+  } = useAppContext();
 
   const availableSlots = [
     {
@@ -40,7 +50,7 @@ const Form = () => {
         </div>
         <div className={styles.content_right_container}>
           <div className={styles.top}>
-            <label className={styles.top_heading} for="slots">
+            <label className={styles.right_top_heading} for="slots">
               Select From Variants
             </label>
             <div className={styles.dropdown}>
@@ -51,9 +61,13 @@ const Form = () => {
                 className={styles.dropdown_btn}
               >
                 {selected}
-                {/* <span
-                  className={isActive ? "fas fa-caret-up" : "fas fa-caret-down"}
-                /> */}
+                <span
+                  className={`${isActive ? "" : styles.icon_down} ${
+                    styles.select_icon
+                  }`}
+                >
+                  <IconDown />
+                </span>
               </div>
               <div
                 className={styles.dropdown_content}
@@ -75,6 +89,11 @@ const Form = () => {
           </div>
           <div className={styles.right_bottom}>
             <Actions />
+            <div className={styles.slot_list}>
+              {slotsAvailable?.map((slot) => (
+                <SingleSlot slot={slot} />
+              ))}
+            </div>
           </div>
         </div>
       </div>
