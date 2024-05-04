@@ -9,15 +9,15 @@ import SingleSlot from "../SingleSlot/SingleSlot";
 import Loader from "../Loader/Loader";
 const Form = () => {
   const {
-    date,
-    setDate,
     isActive,
     setIsActive,
     selected,
     setIsSelected,
-    handleSelect,
     slotsAvailable,
+    currentStep,
     isLoading,
+    setCurrentStep,
+    cleanState,
   } = useAppContext();
 
   const availableSlots = [
@@ -41,70 +41,75 @@ const Form = () => {
   return (
     <article className={styles.content_container}>
       <div className={styles.main_content}>
-        <div className={styles.content_left_container}>
-          <div className={styles.top}>
-            <h3 className={styles.top_heading}>Test Service</h3>
-            <p className={styles.region}>
-              <span className={styles.zone}>Timezone: </span>Asia/Kolkata
-            </p>
-          </div>
-          <CustomCalendar />
-        </div>
-        <div className={styles.content_right_container}>
-          <div className={styles.top}>
-            <label className={styles.right_top_heading} for="slots">
-              Select From Variants
-            </label>
-            <div className={styles.dropdown}>
-              <div
-                onClick={(e) => {
-                  setIsActive(!isActive);
-                }}
-                className={styles.dropdown_btn}
-              >
-                {selected}
-                <span
-                  className={`${isActive ? "" : styles.icon_down} ${
-                    styles.select_icon
-                  }`}
-                >
-                  <IconDown />
-                </span>
+        {currentStep === 1 && (
+          <>
+            <div className={styles.content_left_container}>
+              <div className={styles.top}>
+                <h3 className={styles.top_heading}>Test Service</h3>
+                <p className={styles.region}>
+                  <span className={styles.zone}>Timezone: </span>Asia/Kolkata
+                </p>
               </div>
-              <div
-                className={styles.dropdown_content}
-                style={{ display: isActive ? "block" : "none" }}
-              >
-                {availableSlots?.map((slot) => (
+              <CustomCalendar />
+            </div>
+            <div className={styles.content_right_container}>
+              <div className={styles.top}>
+                <label className={styles.right_top_heading} for="slots">
+                  Select From Variants
+                </label>
+                <div className={styles.dropdown}>
                   <div
                     onClick={(e) => {
-                      setIsSelected(slot?.text);
                       setIsActive(!isActive);
                     }}
-                    className={styles.item}
+                    className={styles.dropdown_btn}
                   >
-                    {slot?.text}
+                    {selected}
+                    <span
+                      className={`${isActive ? "" : styles.icon_down} ${
+                        styles.select_icon
+                      }`}
+                    >
+                      <IconDown />
+                    </span>
                   </div>
-                ))}
+                  <div
+                    className={styles.dropdown_content}
+                    style={{ display: isActive ? "block" : "none" }}
+                  >
+                    {availableSlots?.map((slot) => (
+                      <div
+                        onClick={(e) => {
+                          setIsSelected(slot?.text);
+                          setIsActive(!isActive);
+                        }}
+                        className={styles.item}
+                      >
+                        {slot?.text}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              <div className={styles.right_bottom}>
+                <Actions />
+                <div className={styles.slot_list}>
+                  {isLoading ? (
+                    <Loader />
+                  ) : (
+                    <>
+                      {slotsAvailable?.map((slot, index) => (
+                        <SingleSlot slot={slot} index={index} />
+                      ))}
+                    </>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-          <div className={styles.right_bottom}>
-            <Actions />
-            <div className={styles.slot_list}>
-              {isLoading ? (
-                <Loader />
-              ) : (
-                <>
-                  {slotsAvailable?.map((slot, index) => (
-                    <SingleSlot slot={slot} index={index} />
-                  ))}
-                </>
-              )}
-            </div>
-          </div>
-        </div>
+          </>
+        )}
       </div>
+      {currentStep === 2 && <div>Congrats</div>}
       <div className={styles.bottom}>
         <div className={styles.bottom_left}>
           Powered by{" "}
@@ -116,12 +121,22 @@ const Form = () => {
             Appointer
           </a>
         </div>
-        <div className={styles.bottom_right}>
-          <button className={styles.next_btn}>
-            <span>Next</span>
-            <IconRight />
-          </button>
-        </div>
+        {currentStep === 1 && (
+          <div className={styles.bottom_right}>
+            <button
+              onClick={() => setCurrentStep(2)}
+              className={styles.next_btn}
+            >
+              <span>Next</span>
+              <IconRight />
+            </button>
+          </div>
+        )}
+        {currentStep === 2 && (
+          <span onClick={cleanState} className={styles.back_btn}>
+            Go Back
+          </span>
+        )}
       </div>
     </article>
   );

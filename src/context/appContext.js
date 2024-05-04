@@ -11,6 +11,7 @@ const AppProvider = ({ children }) => {
   const [selected, setIsSelected] = useState("Choose one");
   const [currentSelected, setCurrentSelected] = useState(0);
   const [slotsAvailable, setSlotsAvailable] = useState([]);
+  const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const toast = useToast();
 
@@ -47,6 +48,16 @@ const AppProvider = ({ children }) => {
     });
   };
 
+  const cleanState = () => {
+    setDate(new Date());
+    setIsActive(false);
+    setIsSelected("Choose one");
+    setCurrentSelected(0);
+    setSlotsAvailable([]);
+    setCurrentStep(1);
+    setIsLoading(false);
+  };
+
   const contextValues = {
     date,
     setDate,
@@ -59,6 +70,9 @@ const AppProvider = ({ children }) => {
     currentSelected,
     handleDateSelect,
     isLoading,
+    setCurrentStep,
+    currentStep,
+    cleanState,
   };
   return (
     <AppContext.Provider value={contextValues}>{children}</AppContext.Provider>
