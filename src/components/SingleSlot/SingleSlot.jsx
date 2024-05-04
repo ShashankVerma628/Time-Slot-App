@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import styles from "./singleSlot.module.css";
 import CheckCircle from "../../assets/CheckCircle";
 import { useAppContext } from "../../context/appContext";
-const SingleSlot = ({ slot }) => {
+import { formatTime } from "../../utils";
+const SingleSlot = ({ slot, index }) => {
   const { handleSelect, currentSelected } = useAppContext();
-  const selected = slot?.id === currentSelected?.id;
+  const selected = index === currentSelected;
   return (
     <div
       className={`${styles.slot_wrapper} ${
         selected ? styles.selected_slot : ""
       }`}
-      onClick={() => handleSelect(slot?.id)}
+      onClick={() => handleSelect(index)}
     >
       <div className={`${styles.left} ${selected ? styles.selected_text : ""}`}>
-        {slot?.start_date} - {slot?.end_date}
+        {formatTime(slot?.start_time)} - {formatTime(slot?.end_time)}
       </div>
       {selected && <CheckCircle />}
     </div>

@@ -1,4 +1,7 @@
 import { createContext, useContext, useState } from "react";
+import useToast from "../hooks/useToast";
+import { getSlotsApi } from "../api/api";
+import { addOneDay, formatDate } from "../utils";
 
 const AppContext = createContext({});
 
@@ -6,39 +9,44 @@ const AppProvider = ({ children }) => {
   const [date, setDate] = useState(new Date());
   const [isActive, setIsActive] = useState(false);
   const [selected, setIsSelected] = useState("Choose one");
-  const [currentSelected, setCurrentSelected] = useState({});
-  const [slotsAvailable, setSlotsAvailable] = useState([
-    {
-      id: 1,
-      start_date: "04:00 AM",
-      end_date: "04:30 AM",
-    },
-    {
-      id: 2,
-      start_date: "05:00 AM",
-      end_date: "05:30 AM",
-    },
-    {
-      id: 3,
-      start_date: "04:00 PM",
-      end_date: "04:30 PM",
-    },
-    {
-      id: 4,
-      start_date: "06:00 AM",
-      end_date: "08:30 AM",
-    },
-  ]);
-  function handleBlur(e) {
-    console.log(e);
-  }
-  const handleSelect = (id) => {
-    slotsAvailable?.map((slot) => {
-      if (slot?.id == id) {
-        setCurrentSelected(slot);
+  const [currentSelected, setCurrentSelected] = useState(0);
+  const [slotsAvailable, setSlotsAvailable] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const toast = useToast();
+
+  const getSlots = async (startDate, endDate) => {
+    try {
+      const result = await getSlotsApi(startDate, endDate);
+      if (result?.status == 200) {
+        setSlotsAvailable(result?.data[0]?.slots);
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log("error", error);
+      setIsLoading(false);
+      toast(error?.message, "error");
+    }
+  };
+
+  const handleDateSelect = async (newDate) => {
+    setCurrentSelected(null);
+    setIsLoading(true);
+    setDate(newDate);
+
+    const formattedDate = formatDate(newDate);
+
+    const endDate = formatDate(addOneDay(newDate));
+    await getSlots(formattedDate, endDate);
+  };
+
+  const handleSelect = (index) => {
+    slotsAvailable?.map((slot, slotIndex) => {
+      if (index === slotIndex) {
+        setCurrentSelected(index);
       }
     });
   };
+
   const contextValues = {
     date,
     setDate,
@@ -46,10 +54,11 @@ const AppProvider = ({ children }) => {
     setIsActive,
     selected,
     setIsSelected,
-    handleBlur,
     slotsAvailable,
     handleSelect,
     currentSelected,
+    handleDateSelect,
+    isLoading,
   };
   return (
     <AppContext.Provider value={contextValues}>{children}</AppContext.Provider>

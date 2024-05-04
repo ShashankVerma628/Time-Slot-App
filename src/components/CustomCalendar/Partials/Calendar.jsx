@@ -3,9 +3,9 @@ import "../../../css/calender.css";
 import { useAppContext } from "../../../context/appContext";
 
 const CalendarComponent = () => {
-  const { setDate, date } = useAppContext();
+  const { date, handleDateSelect } = useAppContext();
 
-  return <Calendar onChange={setDate} values={date} />;
+  return <Calendar onChange={handleDateSelect} values={date} />;
 };
 
 export default CalendarComponent;

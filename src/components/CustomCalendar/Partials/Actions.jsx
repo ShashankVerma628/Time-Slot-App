@@ -14,7 +14,9 @@ const Actions = () => {
           {date[1].toDateString()}
         </p>
       ) : (
-        <p className={styles.right_top_heading}>{date.toDateString()}</p>
+        <p className={styles.right_top_heading}>
+          {date.toDateString()} - AVAILABLE SLOTS
+        </p>
       )}
     </>
   );

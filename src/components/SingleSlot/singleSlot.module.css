@@ -1,10 +1,10 @@
 .slot_wrapper {
   border: 1px solid var(--primaryColor);
-  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 48px;
+  max-height: 48px;
+  min-height: 48px;
   padding: 8px 12px;
   border-radius: 10px;
   background: linear-gradient(to right, var(--primaryColor) 50%, white 50%);
@@ -18,6 +18,8 @@
   background-color: var(--primaryColor);
   background-position: left bottom;
   justify-content: space-between;
+  max-height: 48px;
+  min-height: 48px;
 }
 
 .left {

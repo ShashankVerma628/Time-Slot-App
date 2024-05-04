@@ -6,6 +6,7 @@ import { useAppContext } from "../../context/appContext";
 import Actions from "../CustomCalendar/Partials/Actions";
 import IconDown from "../../assets/IconDown";
 import SingleSlot from "../SingleSlot/SingleSlot";
+import Loader from "../Loader/Loader";
 const Form = () => {
   const {
     date,
@@ -16,6 +17,7 @@ const Form = () => {
     setIsSelected,
     handleSelect,
     slotsAvailable,
+    isLoading,
   } = useAppContext();
 
   const availableSlots = [
@@ -90,9 +92,15 @@ const Form = () => {
           <div className={styles.right_bottom}>
             <Actions />
             <div className={styles.slot_list}>
-              {slotsAvailable?.map((slot) => (
-                <SingleSlot slot={slot} />
-              ))}
+              {isLoading ? (
+                <Loader />
+              ) : (
+                <>
+                  {slotsAvailable?.map((slot, index) => (
+                    <SingleSlot slot={slot} index={index} />
+                  ))}
+                </>
+              )}
             </div>
           </div>
         </div>
