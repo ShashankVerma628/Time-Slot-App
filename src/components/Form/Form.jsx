@@ -20,6 +20,7 @@ const Form = () => {
     setCurrentStep,
     cleanState,
     currentSelected,
+    isSlotSelected,
   } = useAppContext();
 
   const availableSlots = [
@@ -151,9 +152,13 @@ const Form = () => {
               <button
                 onClick={() => setCurrentStep(2)}
                 className={`${styles.next_btn} ${
-                  slotsAvailable?.length == 0 ? styles.disabled_next_btn : ""
+                  // slotsAvailable?.length === 0 && !isLoading && !isSlotSelected
+                  !isSlotSelected ? styles.disabled_next_btn : ""
                 }`}
-                disabled={slotsAvailable?.length === 0}
+                disabled={
+                  // slotsAvailable?.length === 0 && !isLoading && !isSlotSelected
+                  !isSlotSelected
+                }
               >
                 <span>Next</span>
                 <IconRight />
