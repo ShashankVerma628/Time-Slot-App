@@ -1,5 +1,6 @@
 import { useAppContext } from "../../../context/appContext";
 import "../../../css/calender.css";
+import styles from "./actions.module.css";
 
 const Actions = () => {
   const { setDate, date, selectRange } = useAppContext();
@@ -13,7 +14,7 @@ const Actions = () => {
           {date[1].toDateString()}
         </p>
       ) : (
-        <p className="text-center">{date.toDateString()}</p>
+        <p className={styles.right_top_heading}>{date.toDateString()}</p>
       )}
     </>
   );
