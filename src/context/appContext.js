@@ -10,6 +10,7 @@ const AppProvider = ({ children }) => {
   const [isActive, setIsActive] = useState(false);
   const [selected, setIsSelected] = useState("Choose one");
   const [currentSelected, setCurrentSelected] = useState(0);
+  const [isSlotSelected, setIsSlotSelected] = useState(false);
   const [slotsAvailable, setSlotsAvailable] = useState([]);
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,6 +32,7 @@ const AppProvider = ({ children }) => {
 
   const handleDateSelect = async (newDate) => {
     setCurrentSelected(null);
+    setIsSlotSelected(false);
     setIsLoading(true);
     setDate(newDate);
 
@@ -41,6 +43,7 @@ const AppProvider = ({ children }) => {
   };
 
   const handleSelect = (index) => {
+    setIsSlotSelected(true);
     slotsAvailable?.map((slot, slotIndex) => {
       if (index === slotIndex) {
         setCurrentSelected(index);
@@ -56,6 +59,7 @@ const AppProvider = ({ children }) => {
     setSlotsAvailable([]);
     setCurrentStep(1);
     setIsLoading(false);
+    setIsSlotSelected(false);
   };
 
   const contextValues = {
@@ -72,6 +76,8 @@ const AppProvider = ({ children }) => {
     isLoading,
     setCurrentStep,
     currentStep,
+    isSlotSelected,
+    setIsSlotSelected,
     cleanState,
   };
   return (
