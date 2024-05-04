@@ -1,6 +1,9 @@
+import { useAppContext } from "../../../context/appContext";
 import "../../../css/calender.css";
 
-const Actions = ({ setDate, date, selectRange, setSelectRange }) => {
+const Actions = () => {
+  const { setDate, date, selectRange } = useAppContext();
+
   return (
     <>
       {date.length > 0 && selectRange ? (
