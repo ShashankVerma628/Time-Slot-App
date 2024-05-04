@@ -41,7 +41,11 @@ const Form = () => {
   ];
 
   return (
-    <article className={styles.content_container}>
+    <article
+      className={`${styles.content_container} ${
+        currentStep === 2 ? styles.content_center : ""
+      }`}
+    >
       <div className={styles.main_content}>
         {currentStep === 1 && (
           <>
@@ -114,8 +118,8 @@ const Form = () => {
       {currentStep === 2 && (
         <div className={styles.success_container}>
           <h2 className={styles.success_heading}>Congratulations</h2>
-          <p>Your appointment has been booked for : </p>
-          <p>
+          <p className={styles.para}>Your appointment has been booked for : </p>
+          <p className={styles.time_slot_para}>
             {formatTime(slotsAvailable[currentSelected]?.start_time)} -{" "}
             {formatTime(slotsAvailable[currentSelected]?.end_time)}
           </p>
@@ -140,7 +144,10 @@ const Form = () => {
             <div className={styles.bottom_right}>
               <button
                 onClick={() => setCurrentStep(2)}
-                className={styles.next_btn}
+                className={`${styles.next_btn} ${
+                  slotsAvailable?.length == 0 ? styles.disabled_next_btn : ""
+                }`}
+                disabled={slotsAvailable?.length === 0}
               >
                 <span>Next</span>
                 <IconRight />
