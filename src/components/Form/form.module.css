@@ -286,6 +286,15 @@
   background-color: var(--secondaryColor);
 }
 
+.date {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 21px;
+  color: #555770;
+  text-transform: uppercase;
+  padding-bottom: 4px;
+}
+
 .disabled_next_btn {
   cursor: not-allowed;
 }
