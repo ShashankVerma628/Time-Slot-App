@@ -32,3 +32,16 @@ export const formatTime = (inputDate) => {
 
   return formattedTime;
 };
+
+export const tileDisabled = ({ activeStartDate, date, view }) => {
+  return date < new Date();
+};
+
+export function getLastDateOfCurrentMonth() {
+  const today = new Date(); // Get current date
+  const year = today.getFullYear(); // Get current year
+  const month = today.getMonth() + 1; // Get current month (0 indexed, so add 1)
+  // To get the last date of the month, set the day to 0 of the next month
+  const lastDate = new Date(year, month, 0);
+  return lastDate; // Return the day part of the last date
+}

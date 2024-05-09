@@ -21,6 +21,7 @@ const Form = () => {
     cleanState,
     currentSelected,
     isSlotSelected,
+    currentSelectedDate,
   } = useAppContext();
 
   const availableSlots = [
@@ -105,9 +106,22 @@ const Form = () => {
                     <Loader />
                   ) : (
                     <>
-                      {slotsAvailable?.map((slot, index) => (
-                        <SingleSlot slot={slot} index={index} />
-                      ))}
+                      {slotsAvailable?.map((slot, index) => {
+                        return (
+                          <>
+                            <p className={styles.date}>{slot?.date}</p>
+                            {slot?.slots?.map((item, index) => (
+                              <>
+                                <SingleSlot
+                                  slot={item}
+                                  date={slot?.date}
+                                  index={index}
+                                />
+                              </>
+                            ))}
+                          </>
+                        );
+                      })}
                     </>
                   )}
                 </div>
@@ -122,11 +136,11 @@ const Form = () => {
           <p className={styles.para}>Your appointment has been booked at : </p>
           <div>
             <p className={styles.time_slot_para}>
-              Date :{formatDate(slotsAvailable[currentSelected]?.start_time)}
+              Date :{formatDate(currentSelectedDate?.date)}
             </p>
             <p className={styles.time_slot_para}>
-              Time : {formatTime(slotsAvailable[currentSelected]?.start_time)} -{" "}
-              {formatTime(slotsAvailable[currentSelected]?.end_time)}
+              Time : {formatTime(currentSelectedDate?.startTime)} -{" "}
+              {formatTime(currentSelectedDate?.endTime)}
             </p>
           </div>
 

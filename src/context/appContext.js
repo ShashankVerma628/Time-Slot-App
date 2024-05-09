@@ -1,7 +1,7 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import useToast from "../hooks/useToast";
 import { getSlotsApi } from "../api/api";
-import { addOneDay, formatDate } from "../utils";
+import { addOneDay, formatDate, getLastDateOfCurrentMonth } from "../utils";
 
 const AppContext = createContext({});
 
@@ -9,18 +9,20 @@ const AppProvider = ({ children }) => {
   const [date, setDate] = useState(new Date());
   const [isActive, setIsActive] = useState(false);
   const [selected, setIsSelected] = useState("Choose one");
-  const [currentSelected, setCurrentSelected] = useState(0);
+  const [currentSelected, setCurrentSelected] = useState(null);
   const [isSlotSelected, setIsSlotSelected] = useState(false);
   const [slotsAvailable, setSlotsAvailable] = useState([]);
   const [currentStep, setCurrentStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentSelectedDate, setCurrentSelectedDate] = useState("");
+  const [selectRange, setSelectRange] = useState(false);
   const toast = useToast();
 
   const getSlots = async (startDate, endDate) => {
     try {
       const result = await getSlotsApi(startDate, endDate);
       if (result?.status == 200) {
-        setSlotsAvailable(result?.data[0]?.slots);
+        setSlotsAvailable(result?.data);
         setIsLoading(false);
       }
     } catch (error) {
@@ -35,21 +37,39 @@ const AppProvider = ({ children }) => {
     setIsSlotSelected(false);
     setIsLoading(true);
     setDate(newDate);
+    setSelectRange(true);
 
     const formattedDate = formatDate(newDate);
-
     const endDate = formatDate(addOneDay(newDate));
-    await getSlots(formattedDate, endDate);
+
+    if (endDate) {
+      await getSlots(formattedDate, endDate);
+    }
   };
 
-  const handleSelect = (index) => {
+  const handleSelect = (index, date, startTime, endTime) => {
     setIsSlotSelected(true);
+    setCurrentSelectedDate({
+      date,
+      startTime,
+      endTime,
+    });
     slotsAvailable?.map((slot, slotIndex) => {
       if (index === slotIndex) {
         setCurrentSelected(index);
       }
     });
   };
+
+  const fetchInitialSlots = async () => {
+    const startDate = formatDate(new Date());
+    const endDate = formatDate(getLastDateOfCurrentMonth());
+    await getSlots(startDate, endDate);
+  };
+
+  useEffect(() => {
+    fetchInitialSlots();
+  }, []);
 
   const cleanState = () => {
     setDate(new Date());
@@ -60,6 +80,8 @@ const AppProvider = ({ children }) => {
     setCurrentStep(1);
     setIsLoading(false);
     setIsSlotSelected(false);
+    setCurrentSelectedDate("");
+    fetchInitialSlots();
   };
 
   const contextValues = {
@@ -79,6 +101,9 @@ const AppProvider = ({ children }) => {
     isSlotSelected,
     setIsSlotSelected,
     cleanState,
+    setSelectRange,
+    selectRange,
+    currentSelectedDate,
   };
   return (
     <AppContext.Provider value={contextValues}>{children}</AppContext.Provider>
